@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using System.Net.Http.Formatting;
-using System.Web.Http;
 using Taks.Models;
 using Taks.Repositorio.Interfaces;
 
@@ -10,7 +8,7 @@ namespace Taks.Controllers
 {
     [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ApiController
+    public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioRepositorio _usuarioRepositorio;
         public UsuarioController(IUsuarioRepositorio usuarioRepositorio)
@@ -19,16 +17,12 @@ namespace Taks.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public async Task<HttpResponseMessage>  BuscarTodosUsuarios()
+        public async Task<ActionResult>  BuscarTodosUsuarios()
 
         {
             var usuarios = await _usuarioRepositorio.BuscarTodosUsuarios();
 
-            return Request.CreateResponse(HttpStatusCode.OK, new
-            {
-                Code = "OK",
-                Data = usuarios
-            }, new JsonMediaTypeFormatter());
+            return Ok(usuarios);
         }
     }
 }
