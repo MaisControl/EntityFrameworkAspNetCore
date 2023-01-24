@@ -30,5 +30,19 @@ namespace Taks.Controllers
                 Data = usuarios
             }, new JsonMediaTypeFormatter());
         }
+
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public async Task<HttpResponseMessage> BuscarUsuario(int id)
+
+        {
+            var usuario = await _usuarioRepositorio.BuscarUsuarioId(id);
+
+            return Request.CreateResponse(HttpStatusCode.OK, new
+            {
+                Code = "OK",
+                Data = usuario
+            }, new JsonMediaTypeFormatter());
+        }
     }
 }
